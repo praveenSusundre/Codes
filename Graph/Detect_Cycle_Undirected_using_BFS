@@ -5,7 +5,7 @@ class Solution {
 
 public:
 
-    bool cycle_bfs(int s, vector<int> visited, vector<int> adj[]){
+    bool cycle_bfs(int s, vector<int> &visited, vector<int> adj[]){
         queue<pair<int, int>> q;                    // create queue with current and parent node
         q.push({s,-1});                             // for first node, parent is none
         visited[s] = 1;                             // mark it as visited
