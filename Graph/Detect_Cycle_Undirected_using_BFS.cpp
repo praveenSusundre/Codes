@@ -5,23 +5,31 @@ class Solution {
 
 public:
 
+// create a queue of pairs, {current_node, parent_node}
+// for source, parent will -1, push the source into queue, mark it visited
+// start a while loop till the queue is empty
+// take 1st node from queue, pop it from the queue
+// push all the unvisited adjacent nodes with its parent, into queue
+// if the adjacent node is visited and that is not parent, then cycle exist
+// if q is empty, then cycle did not exist.
+
     bool cycle_bfs(int s, vector<int> &visited, vector<int> adj[]){
-        queue<pair<int, int>> q;                    // create queue with current and parent node
-        q.push({s,-1});                             // for first node, parent is none
-        visited[s] = 1;                             // mark it as visited
+        queue<pair<int, int>> q;                    
+        q.push({s,-1});                           
+        visited[s] = 1;                            
 
         while(!q.empty()){
-            int node = q.front().first;            // current node
-            int par = q.front().second;            // its parent node
+            int node = q.front().first;           
+            int par = q.front().second;           
             q.pop();
             visited[node] = 1;
 
-            for(auto it : adj[node]){              // for all its adjacent nodes
-                if(!visited[it]){                  // if adjacent node is not visited, just add it in queue
+            for(auto it : adj[node]){              
+                if(!visited[it]){                  
                     q.push({it, node});
                     visited[it] = 1;
                 }
-                else if(it != par){                // if already visited, and also not parent, then cycle exist
+                else if(it != par){                
                     return true;
                 }
             }
@@ -30,10 +38,10 @@ public:
     }
 
     bool isCycle(int V, vector<int> adj[]){
-        vector<int> visited(V, 0);                    // create visited array
+        vector<int> visited(V, 0);                    
         for(int i = 0; i < V; i++){
-            if(!visited[i]){                          // for each connected component run bfs
-                if(cycle_bfs(i, visited, adj)){       // if any component has cycle than return true
+            if(!visited[i]){                          
+                if(cycle_bfs(i, visited, adj)){       
                     return true;
                 }
             }
