@@ -5,26 +5,28 @@ class Solution {
 
 public:
 
-    bool cycle_dir_dfs(int s, vector<int> &visited, vector<int> &path_elements, vector<int> adj[]){
-        visited[s] = 1;                            // visit the source
-        path_elements[s] = 1;                      // add source to path_elements
+// for each connected component, visit the source first
+// push it into path_elements
+// check the cycle_detection for all its unvisited adjacent nodes
+// if already visited, then cycle exist return true.
+// before backtracking, make sure you remove the node from path_elements.
 
-        for(auto it : adj[s]){                     // for all adjacent node
-            if(!visited[it]){                      // if not visited, check cycle for adjacent
+    bool cycle_dir_dfs(int s, vector<int> &visited, vector<int> &path_elements, vector<int> adj[]){
+        visited[s] = 1;                            
+        path_elements[s] = 1;                      
+
+        for(auto it : adj[s]){                // for all its adjacent nodes            
+            if(!visited[it]){                      
                 if(cycle_dir_dfs(it, visited, path_elements, adj))
                     return true;
             }
-            else if(path_elements[it]){            // if adjacent element was in path, then cycle exist
+            else if(path_elements[it]){            
                 return true;
             }
         }
-        path_elements[s] = 0;                      // remove the element from path, when backtracking
+        path_elements[s] = 0;                 // before backtracking     
         return false;
     }
-
-
-
-
 
     bool iscycle_dir(int V, vector<int> adj[]){
         vector<int> visited(V, 0);                // to maintain the visited node list
@@ -38,7 +40,7 @@ public:
         }
         return false;
     }
-    
+
 };
 
 int main(){
