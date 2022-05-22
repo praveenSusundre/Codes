@@ -5,16 +5,22 @@ class Solution {
 
 public:
 
+// keep a single parent variable for every node while calling dfs_cycle function
+// check the cycle for all its unvisited adj nodes, 
+// if cycle exist for any adj node, then return true
+// else for visited adj and not its parent, then also return true
+// return false if all adjacents are covered.
+
     bool cycle_dfs(int s, vector<int> &visited, int parent, vector<int> adj[]){
         visited[s] = 1;     
 
-        for(auto it : adj[s]){                 // for all its adjacent nodes
-            if(!visited[it]){                  // if adjacent node is not visited, run dfs for its adj
-                if(cycle_dfs(it, visited, s, adj)){    // keeping parent as current node
+        for(auto it : adj[s]){                 
+            if(!visited[it]){                 
+                if(cycle_dfs(it, visited, s, adj)){   
                     return true;
                 }
             }
-            else if(parent != it){         // if already visited, and also not parent, then cycle exist
+            else if(parent != it){         
                 return true;
             }
         }
@@ -22,10 +28,10 @@ public:
     }
 
     bool isCycle(int V, vector<int> adj[]){
-        vector<int> visited(V, 0);                    // create visited array
+        vector<int> visited(V, 0);                    
         for(int i = 0; i < V; i++){
-            if(!visited[i]){                          // for each connected component run dfs
-                if(cycle_dfs(i, visited, -1, adj)){ // if any component has cycle than return true
+            if(!visited[i]){                          
+                if(cycle_dfs(i, visited, -1, adj)){
                     return true;
                 }
             }
